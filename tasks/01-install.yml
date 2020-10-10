@@ -1,0 +1,16 @@
+---
+- name: "Import elasticsearch GPG key"
+  rpm_key:
+    state: present
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: "Configure Kibana repository"
+  copy:
+    src: "kibana.repo"
+    dest: "/etc/yum.repos.d/kibana.repo"
+
+- name: "Install Kibana"
+  yum:
+    name: kibana
+    state: latest
+  notify: "Start Kibana"
